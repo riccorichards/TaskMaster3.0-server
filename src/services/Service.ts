@@ -332,14 +332,14 @@ class Service {
 
       remainingDays = Utils.defineRemainDays(
         profile.journeyDuration,
-        history[0].createdAt || ""
+        history[history.length - 1].createdAt
       ).result;
       usedTime = (totalWorkingHours / (profile.allocatedTime * 3600)) * 100;
       perDay =
         profile.allocatedTime /
         Utils.defineRemainDays(
           profile.journeyDuration,
-          history[0].createdAt || ""
+          history[history.length - 1].createdAt
         ).differenceInDays;
     }
 
