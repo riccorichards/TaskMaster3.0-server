@@ -178,7 +178,7 @@ class Repository {
   }
 
   async FilterHistory(query: any) {
-    return await HistoryModel.find(query).sort({ createdAt: -1 });
+    return await HistoryModel.find(query);
   }
 
   async NewQuestionForBot(userId: string, question: string, role: string) {

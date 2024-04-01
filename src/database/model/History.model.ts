@@ -7,7 +7,7 @@ const HistorySchema = new mongoose.Schema({
   storedTime: { type: Number },
   complete: { type: Boolean },
   priority: { type: String },
-  createdAt: { type: String },
+  createdAt: { type: Date },
 });
 
 const HistoryModel = mongoose.model("history", HistorySchema);

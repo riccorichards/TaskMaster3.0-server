@@ -30,6 +30,11 @@ class Utils {
     return hierarchy;
   };
 
+  static capitalized(str: string) {
+    const firstChar = str.charAt(0).toUpperCase();
+    return firstChar + str.slice(1);
+  }
+
   static extractDate(createdAt: string) {
     const date = new Date(createdAt);
     const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
@@ -38,8 +43,9 @@ class Utils {
     return `${month}/${day}`;
   }
 
-  static defineRemainDays(period: string, startDay: string) {
-    //startDay Tue Mar 08 2024 16:28:06 GMT+0400 (Georgia Standard Time)
+  static defineRemainDays(period: string, startDay: Date) {
+    console.log({ period, startDay });
+
     const endTime = new Date(period);
     const today = new Date();
     const start = new Date(startDay);

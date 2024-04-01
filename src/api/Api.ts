@@ -77,28 +77,7 @@ const Api = (app: Application) => {
         );
 
         if (response) {
-          const { accessToken, refreshToken } = response;
-          res.setHeader(
-            "Access-Control-Allow-Origin",
-            "https://task-master3-0.vercel.app"
-          );
-          res.setHeader("Access-Control-Allow-Credentials", "true");
-
-          res.cookie("accessToken", accessToken, {
-            maxAge: 3.154e10,
-            httpOnly: true,
-            path: "/",
-            sameSite: "none",
-            secure: true,
-          });
-
-          res.cookie("refreshToken", refreshToken, {
-            maxAge: 3.154e10,
-            httpOnly: true,
-            path: "/",
-            sameSite: "none",
-            secure: true,
-          });
+          //const { accessToken, refreshToken } = response;
 
           return res.redirect(`${config.origin}/dashboard/overview`);
         }

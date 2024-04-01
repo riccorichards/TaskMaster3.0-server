@@ -265,7 +265,10 @@ class Service {
       if (value < 2) {
         value = Boolean(value);
       }
+    } else {
+      value = Utils.capitalized(value);
     }
+
     let query: { [key: string]: any } = { author };
     query[field] = value;
 
@@ -285,7 +288,7 @@ class Service {
 
     // Populate the map with tasks grouped by date
     for (const task of history) {
-      const date = Utils.extractDate(task.createdAt || ""); // Get only the date portion
+      const date = Utils.extractDate(task.createdAt?.toString() || ""); // Get only the date portion
       const existingTasks = groupedTasks.get(date) || [];
       groupedTasks.set(date, [...existingTasks, task]);
     }
@@ -313,7 +316,7 @@ class Service {
     if (profile.journeyDuration && profile.allocatedTime) {
       const history = (await this.Repo.GetDayFinish(userId, "all")) as {
         storedTime: number;
-        createdAt: string;
+        createdAt: Date;
       }[];
 
       if (history.length === 0) {
@@ -329,14 +332,14 @@ class Service {
 
       remainingDays = Utils.defineRemainDays(
         profile.journeyDuration,
-        history[0].createdAt || ""
+        history[history.length - 1].createdAt
       ).result;
       usedTime = (totalWorkingHours / (profile.allocatedTime * 3600)) * 100;
       perDay =
         profile.allocatedTime /
         Utils.defineRemainDays(
           profile.journeyDuration,
-          history[0].createdAt || ""
+          history[history.length - 1].createdAt
         ).differenceInDays;
     }
 
