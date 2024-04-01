@@ -125,9 +125,15 @@ class Repository {
     input: UpdateTaskType["body"]
   ) {
     const { taskId } = id;
-    return await TaskModel.findByIdAndUpdate(taskId, input, {
-      new: true,
-    });
+    const task = await TaskModel.findById(taskId);
+
+    if (!task)
+      throw new NotFoundError("Task was not found by provided ID: " + taskId);
+
+    task.complete = input.complete;
+    task.storedTime += input.storedTime;
+
+    return await task.save();
   }
 
   async DeleteTask(input: DeleteTaskType["params"]) {
@@ -173,8 +179,8 @@ class Repository {
 
   async GetDayFinish(author: string, amount: string) {
     return await HistoryModel.find({ author })
-      .sort({ createdAt: -1 })
-      .limit(amount === "all" ? Infinity : 10);
+      .limit(amount === "all" ? Infinity : 10)
+      .sort({ createdAt: -1 });
   }
 
   async FilterHistory(query: any) {

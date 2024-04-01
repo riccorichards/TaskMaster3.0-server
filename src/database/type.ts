@@ -47,7 +47,7 @@ export interface TaskDocument {
   priority: string;
   complete: boolean;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt: string;
 }
 
 export interface BotRoleInput {
