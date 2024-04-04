@@ -20,6 +20,8 @@ import {
   UpdateTaskSchema,
 } from "./middleware/zodSchemas/TaskZodSchema";
 import config from "../../config";
+import { ChatGPT } from "../utils/ChatGTP";
+import { BadRequestError } from "../utils/Error";
 
 const Api = (app: Application) => {
   const service = new Service();
@@ -474,6 +476,26 @@ const Api = (app: Application) => {
       }
     }
   );
+
+  app.post("/api/chat-gpt", async (req: Request, res: Response) => {
+    const target = "You are the Application's virtual representative.";
+
+    try {
+      if (!req.body.message)
+        throw new BadRequestError("Provided message is valid.");
+
+      const {
+        message: { content, role },
+      } = await ChatGPT(req.body?.message, target);
+
+      return res.json({
+        message: content,
+        role,
+      });
+    } catch (error) {
+      return res.json(error);
+    }
+  });
 
   //logs out
   app.get(

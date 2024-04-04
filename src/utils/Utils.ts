@@ -44,8 +44,6 @@ class Utils {
   }
 
   static defineRemainDays(period: string, startDay: Date) {
-    console.log({ period, startDay });
-
     const endTime = new Date(period);
     const today = new Date();
     const start = new Date(startDay);
