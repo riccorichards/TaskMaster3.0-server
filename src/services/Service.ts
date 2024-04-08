@@ -258,7 +258,11 @@ class Service {
   ) {
     const intArray = ["1", "0"];
 
-    let value: number | boolean | string = originValue;
+    let value:
+      | number
+      | boolean
+      | { $regex: string; $options: string }
+      | string = originValue;
 
     if (intArray.includes(originValue)) {
       value = parseInt(originValue, 10);
@@ -266,7 +270,10 @@ class Service {
         value = Boolean(value);
       }
     } else {
-      value = Utils.capitalized(value);
+      value =
+        field === "workspace"
+          ? { $regex: Utils.capitalized(value as string), $options: "i" }
+          : { $regex: value, $options: "i" };
     }
 
     let query: { [key: string]: any } = { author };
