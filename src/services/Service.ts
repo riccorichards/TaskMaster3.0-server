@@ -394,7 +394,7 @@ class Service {
       });
     });
 
-    return result.slice(0, 10).sort((a, b) => b.value - a.value);
+    return result.sort((a, b) => b.value - a.value).slice(0, 10);
   }
 
   async BotMessageService({
